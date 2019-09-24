@@ -4,22 +4,22 @@ import Table from 'antd/es/table';
 import { useQuery } from 'react-apollo';
 import { gql } from 'apollo-boost';
 
-function Electric() {
-  const POKEMON_LIST = gql`
-    query getPokemon {
-      pokemons(first: 10) {
-        id
+function People() {
+  const PEOPLE_LIST = gql`
+    query getPeople {
+      allPersons {
         name
+        id
       }
     }
   `;
 
-  const { loading, error, data } = useQuery(POKEMON_LIST);
+  const { loading, error, data } = useQuery(PEOPLE_LIST);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-  return data.pokemons.map(({ id, name }) => (
+  return data.allPersons.map(({ id, name }) => (
     <div key={id}>
       <p>
         {id}: {name}
@@ -28,4 +28,4 @@ function Electric() {
   ));
 }
 
-export default Electric;
+export default People;

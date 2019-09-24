@@ -10,12 +10,12 @@ import {
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 import App from './App';
-import Electric from './electric/electric';
+import People from './people/people';
 
 import './index.css';
 
 const client = new ApolloClient({
-  uri: 'https://graphql-pokemon.now.sh/graphql'
+  uri: 'https://api.graphcms.com/simple/v1/swapi'
 });
 
 const routing = (
@@ -29,15 +29,15 @@ const routing = (
             </NavLink>
           </li>
           <li>
-            <NavLink activeClassName="active" to="/electric">
-              Electric
+            <NavLink activeClassName="active" to="/people">
+              People
             </NavLink>
           </li>
         </ul>
         <hr />
         <Switch>
           <Route exact path="/" component={App} />
-          <Route path="/electric" component={Electric} />
+          <Route path="/people" component={People} />
         </Switch>
       </div>
     </Router>
