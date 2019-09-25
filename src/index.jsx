@@ -1,17 +1,11 @@
 import React from 'react';
 import { render } from 'react-dom';
-import {
-  Route,
-  NavLink,
-  BrowserRouter as Router,
-  Switch
-} from 'react-router-dom';
-
+import { Provider } from 'react-redux';
+import store from './redux/store';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
-import Home from './home/Home.jsx';
-import People from './people/People.jsx';
 
+import App from './App';
 import './index.css';
 
 const client = new ApolloClient({
@@ -19,29 +13,11 @@ const client = new ApolloClient({
 });
 
 const routing = (
-  <ApolloProvider client={client}>
-    <Router>
-      <div>
-        <ul>
-          <li>
-            <NavLink exact activeClassName="active" to="/">
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName="active" to="/people">
-              People
-            </NavLink>
-          </li>
-        </ul>
-        <hr />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/people" component={People} />
-        </Switch>
-      </div>
-    </Router>
-  </ApolloProvider>
+  <Provider store={store}>
+    <ApolloProvider client={client}>
+      <App/>
+    </ApolloProvider>
+  </Provider>
 );
 
 render(routing, document.getElementById('root'));

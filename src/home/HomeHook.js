@@ -1,4 +1,5 @@
 import React from 'react';
+import { Table } from 'antd';
 
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
@@ -11,6 +12,7 @@ const HomeHook = () => {
       ) {
         title
         episodeId
+        releaseDate
       }
     }
   `;
@@ -24,13 +26,33 @@ const HomeHook = () => {
 };
 
 const DisplayFilms = (data) => {
-  return data.films.map(({ episodeId, title }) => (
-    <div key={episodeId}>
-      <p>
-        {episodeId}: {title}
-      </p>
-    </div>
-  ));
+  const dataSource = data.films;
+  const columns = [
+    {
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
+    },
+    {
+      title: 'Episode ID',
+      dataIndex: 'episodeId',
+      key: 'episodeId',
+    },
+    {
+      title: 'Release Date',
+      dataIndex: 'releaseDate',
+      key: 'releaseDate',
+    },
+  ];
+
+  return (
+    <Table
+      dataSource={dataSource}
+      columns={columns}
+      pagination={false}
+      rowKey="episodeId"
+    />
+  );
 };
 
 export default HomeHook;
