@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import {
   Route,
   NavLink,
@@ -9,8 +9,8 @@ import {
 
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
-import App from './App';
-import People from './people/people';
+import Home from './home/Home.jsx';
+import People from './people/People.jsx';
 
 import './index.css';
 
@@ -36,7 +36,7 @@ const routing = (
         </ul>
         <hr />
         <Switch>
-          <Route exact path="/" component={App} />
+          <Route exact path="/" component={Home} />
           <Route path="/people" component={People} />
         </Switch>
       </div>
@@ -44,4 +44,4 @@ const routing = (
   </ApolloProvider>
 );
 
-ReactDOM.render(routing, document.getElementById('root'));
+render(routing, document.getElementById('root'));
