@@ -8,7 +8,6 @@ class Favorites extends Component {
   render() {
     const { Title } = Typography;
     const { favoriteFilms, favoritePeople } = this.props;
-    console.log('this', this);
 
     return (
       <div>

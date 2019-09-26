@@ -6,6 +6,7 @@ import HomeHook from './HomeHook';
 import Navigation from '../navigation/Navigation';
 
 import { addFavoriteFilm, removeFavoriteFilm } from '../redux/actions';
+import styles from './Home.module.css';
 
 class Home extends Component {
   getColumns() {
@@ -36,7 +37,7 @@ class Home extends Component {
         width: 100,
         render: (film) => {
           return (
-            <div>
+            <div className={styles.center}>
               {!this.isItemInStore(film.id) ? <Button
                 type="primary"
                 shape="circle"
@@ -44,7 +45,7 @@ class Home extends Component {
                 onClick={() => this.props.dispatch(addFavoriteFilm(film))}
               /> : null}
               {this.isItemInStore(film.id) ? <Button
-                type="primary"
+                type="danger"
                 shape="circle"
                 icon="minus-circle"
                 onClick={() => this.props.dispatch(removeFavoriteFilm(film.id))}
@@ -84,7 +85,6 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = (state) => {
   return ({
     favoriteFilms: state.films.favoriteFilms,
-    favoritePeople: state.people.favoritePeople,
   });
 };
 
