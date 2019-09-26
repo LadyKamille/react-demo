@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Typography } from 'antd';
+import { message, Button, Typography } from 'antd';
 
 import HomeHook from './HomeHook';
 import Navigation from '../navigation/Navigation';
@@ -42,19 +42,24 @@ class Home extends Component {
                 type="primary"
                 shape="circle"
                 icon="plus-circle"
-                onClick={() => this.props.dispatch(addFavoriteFilm(film))}
+                onClick={() => this.handleClick(addFavoriteFilm, 'added', film)}
               /> : null}
               {this.isItemInStore(film.id) ? <Button
                 type="danger"
                 shape="circle"
                 icon="minus-circle"
-                onClick={() => this.props.dispatch(removeFavoriteFilm(film.id))}
+                onClick={() => this.handleClick(removeFavoriteFilm, 'removed', film.id)}
               /> : null}
             </div>
           );
         },
       },
     ];
+  }
+
+  handleClick(action, actionType, payload) {
+    this.props.dispatch(action(payload));
+    message.success(`Favorite successfully ${actionType}.`);
   }
 
   isItemInStore(itemId) {

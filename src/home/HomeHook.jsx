@@ -1,8 +1,12 @@
 import React from 'react';
-import { Table } from 'antd';
+import { Spin, Table } from 'antd';
 
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
+
+import store from '../redux/store';
+import { addFilm } from '../redux/actions';
+import styles from './Home.module.css';
 
 const HomeHook = (props) => {
   const filmQuery = gql`
@@ -20,7 +24,7 @@ const HomeHook = (props) => {
 
   const { loading, error, data } = useQuery(filmQuery);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <div className={styles.center}><Spin size="large" /></div>;
   if (error) return `Error! ${error}`;
 
   return <DisplayFilms columns={props.columns} films={data.allFilms} />;
@@ -28,6 +32,7 @@ const HomeHook = (props) => {
 
 const DisplayFilms = (props) => {
   const dataSource = props.films.map(film => {
+    store.dispatch(addFilm(film));
     film.releaseDate = new Date(film.releaseDate).toLocaleDateString('en-US');
     return film;
   });

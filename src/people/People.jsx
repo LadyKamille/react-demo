@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Typography } from 'antd';
+import Highlighter from 'react-highlight-words';
+import {
+  message,
+  Button,
+  Icon,
+  Input,
+  Typography
+} from 'antd';
 
 import PeopleHook from './PeopleHook';
 import Navigation from '../navigation/Navigation';
@@ -9,6 +16,11 @@ import { addFavoritePerson, removeFavoritePerson } from '../redux/actions';
 import styles from './People.module.css';
 
 class People extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { searchText: '' };
+  }
+
   getColumns() {
     return [
       {
@@ -16,6 +28,7 @@ class People extends Component {
         dataIndex: 'name',
         key: 'name',
         sorter: (a, b) => a.name.localeCompare(b.name),
+        ...this.getColumnSearchProps('name'),
       },
       {
         title: 'Gender',
@@ -59,6 +72,21 @@ class People extends Component {
         sorter: (a, b) => a.homeworld.localeCompare(b.homeworld),
       },
       {
+        title: 'Films',
+        dataIndex: 'films',
+        key: 'films',
+        filters: this.props.allFilms.map(film => {
+          return {
+            text: film.title,
+            value: film.episodeId,
+          };
+        }),
+        onFilter: (value, record) => {
+          const films = record.films.props.films;
+          return films.some(film => film.episodeId === value);
+        },
+      },
+      {
         title: 'Manage Favorites',
         key: 'operation',
         fixed: 'right',
@@ -70,13 +98,13 @@ class People extends Component {
                 type="primary"
                 shape="circle"
                 icon="plus-circle"
-                onClick={() => this.props.dispatch(addFavoritePerson(person))}
+                onClick={() => this.handleClick(addFavoritePerson, 'added', person)}
               /> : null}
               {this.isItemInStore(person.id) ? <Button
                 type="danger"
                 shape="circle"
                 icon="minus-circle"
-                onClick={() => this.props.dispatch(removeFavoritePerson(person.id))}
+                onClick={() => this.handleClick(removeFavoritePerson, 'removed', person.id)}
               /> : null}
             </div>
           );
@@ -84,6 +112,71 @@ class People extends Component {
       },
     ];
   }
+
+  getColumnSearchProps = dataIndex => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          ref={node => {
+            this.searchInput = node;
+          }}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => this.handleSearch(selectedKeys, confirm)}
+          style={{ width: 188, marginBottom: 8, display: 'block' }}
+        />
+        <Button
+          type="primary"
+          onClick={() => this.handleSearch(selectedKeys, confirm)}
+          icon="search"
+          size="small"
+          style={{ width: 90, marginRight: 8 }}
+        >
+          Search
+        </Button>
+        <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+          Reset
+        </Button>
+      </div>
+    ),
+    filterIcon: filtered => (
+      <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]
+        .toString()
+        .toLowerCase()
+        .includes(value.toLowerCase()),
+    onFilterDropdownVisibleChange: visible => {
+      if (visible) {
+        setTimeout(() => this.searchInput.select());
+      }
+    },
+    render: text => (
+      <Highlighter
+        highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+        searchWords={[this.state.searchText]}
+        autoEscape
+        textToHighlight={text.toString()}
+      />
+    ),
+  });
+
+  handleClick(action, actionType, payload) {
+    this.props.dispatch(action(payload));
+    message.success(`Favorite successfully ${actionType}.`);
+  }
+
+  handleSearch = (selectedKeys, confirm) => {
+    confirm();
+    this.setState({ searchText: selectedKeys[0] });
+  };
+
+  handleReset = clearFilters => {
+    clearFilters();
+    this.setState({ searchText: '' });
+  };
 
   isItemInStore(itemId) {
     return (
@@ -112,6 +205,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = (state) => {
   return ({
+    allFilms: state.films.allFilms,
     favoritePeople: state.people.favoritePeople,
   });
 };
