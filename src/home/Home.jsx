@@ -37,23 +37,30 @@ class Home extends Component {
         render: (film) => {
           return (
             <div>
-              <Button
+              {!this.isItemInStore(film.id) ? <Button
                 type="primary"
                 shape="circle"
                 icon="plus-circle"
                 onClick={() => this.props.dispatch(addFavoriteFilm(film))}
-              />
-              <Button
+              /> : null}
+              {this.isItemInStore(film.id) ? <Button
                 type="primary"
                 shape="circle"
                 icon="minus-circle"
                 onClick={() => this.props.dispatch(removeFavoriteFilm(film.id))}
-              />
+              /> : null}
             </div>
           );
         },
       },
     ];
+  }
+
+  isItemInStore(itemId) {
+    return (
+      this.props.favoriteFilms.length &&
+      this.props.favoriteFilms.some(film => film.id === itemId)
+    );
   }
 
   render() {
@@ -74,4 +81,11 @@ const mapDispatchToProps = dispatch => ({
   dispatch,
 });
 
-export default connect(null, mapDispatchToProps)(Home);
+const mapStateToProps = (state) => {
+  return ({
+    favoriteFilms: state.films.favoriteFilms,
+    favoritePeople: state.people.favoritePeople,
+  });
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
