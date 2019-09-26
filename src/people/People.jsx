@@ -6,6 +6,7 @@ import {
   Button,
   Icon,
   Input,
+  Layout,
   Typography
 } from 'antd';
 
@@ -186,13 +187,16 @@ class People extends Component {
   }
 
   render() {
+    const { Content } = Layout;
     const { Title } = Typography;
 
     return (
       <div>
         <Navigation/>
-        <Title>Star Wars Characters</Title>
-        <PeopleHook columns={this.getColumns()}/>
+        <Content className="content">
+          <Title>Star Wars Characters</Title>
+          <PeopleHook columns={this.getColumns()}/>
+        </Content>
       </div>
     );
   }

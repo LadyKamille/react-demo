@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { message, Button, Typography } from 'antd';
+import { message, Button, Layout, Typography } from 'antd';
 
 import HomeHook from './HomeHook';
 import Navigation from '../navigation/Navigation';
@@ -70,13 +70,16 @@ class Home extends Component {
   }
 
   render() {
+    const { Content } = Layout;
     const { Title } = Typography;
 
     return (
       <div>
         <Navigation/>
-        <Title>Star Wars Films</Title>
-        <HomeHook columns={this.getColumns()}/>
+        <Content className="content">
+          <Title>Star Wars Films</Title>
+          <HomeHook columns={this.getColumns()}/>
+        </Content>
       </div>
     );
   }
