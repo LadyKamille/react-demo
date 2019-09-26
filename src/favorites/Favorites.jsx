@@ -6,7 +6,6 @@ import Navigation from '../navigation/Navigation';
 
 class Favorites extends Component {
   render() {
-    console.log('props', this.props);
     const { Title } = Typography;
     const { favoriteFilms, favoritePeople } = this.props;
 
