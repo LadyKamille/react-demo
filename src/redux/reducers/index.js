@@ -1,9 +1,5 @@
-const initialState = {
-  films: [],
-};
+import { combineReducers } from 'redux';
+import films from './films';
+import people from './people';
 
-const rootReducer = (state = initialState, action) => {
-  return state;
-};
-
-export default rootReducer;
+export default combineReducers({ films, people });

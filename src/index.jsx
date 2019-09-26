@@ -13,11 +13,11 @@ const client = new ApolloClient({
 });
 
 const routing = (
-  <Provider store={store}>
-    <ApolloProvider client={client}>
+  <ApolloProvider client={client}>
+    <Provider store={store}>
       <App/>
-    </ApolloProvider>
-  </Provider>
+    </Provider>
+  </ApolloProvider>
 );
 
 render(routing, document.getElementById('root'));

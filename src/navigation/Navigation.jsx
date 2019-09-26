@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, Icon } from 'antd';
+import { Menu } from 'antd';
 
 const Navigation = () => (
   <Menu mode="horizontal">
@@ -9,6 +9,9 @@ const Navigation = () => (
     </Menu.Item>
     <Menu.Item key="people">
       <Link href="/" to="/people">People</Link>
+    </Menu.Item>
+    <Menu.Item key="favorites">
+      <Link href="/" to="/favorites">Favorites</Link>
     </Menu.Item>
   </Menu>
 );

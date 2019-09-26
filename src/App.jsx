@@ -5,12 +5,14 @@ import {
 } from 'react-router-dom';
 import Home from './home/Home';
 import People from './people/People';
+import Favorites from './favorites/Favorites';
 
 const App = () => (
   <Router>
     <div>
       <Route exact path="/" component={Home} />
       <Route path="/people" component={People} />
+      <Route path="/favorites" component={Favorites} />
     </div>
   </Router>
 );

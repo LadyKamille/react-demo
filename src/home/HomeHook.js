@@ -4,12 +4,13 @@ import { Table } from 'antd';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 
-const HomeHook = () => {
+const HomeHook = (props) => {
   const filmQuery = gql`
     query getFilms {
       allFilms(
         orderBy:releaseDate_ASC
       ) {
+        id
         title
         episodeId
         releaseDate
@@ -19,36 +20,22 @@ const HomeHook = () => {
 
   const { loading, error, data } = useQuery(filmQuery);
 
-  if (loading) return null;
+  if (loading) return <p>Loading...</p>;
   if (error) return `Error! ${error}`;
 
-  return <DisplayFilms films={data.allFilms} />;
+  return <DisplayFilms columns={props.columns} films={data.allFilms} />;
 };
 
-const DisplayFilms = (data) => {
-  const dataSource = data.films;
-  const columns = [
-    {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
-    },
-    {
-      title: 'Episode ID',
-      dataIndex: 'episodeId',
-      key: 'episodeId',
-    },
-    {
-      title: 'Release Date',
-      dataIndex: 'releaseDate',
-      key: 'releaseDate',
-    },
-  ];
+const DisplayFilms = (props) => {
+  const dataSource = props.films.map(film => {
+    film.releaseDate = new Date(film.releaseDate).toLocaleDateString('en-US');
+    return film;
+  });
 
   return (
     <Table
       dataSource={dataSource}
-      columns={columns}
+      columns={props.columns}
       pagination={false}
       rowKey="episodeId"
     />

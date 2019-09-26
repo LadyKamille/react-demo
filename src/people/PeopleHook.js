@@ -11,6 +11,7 @@ const PeopleHook = () => {
         name
         id
         birthYear
+        gender
         homeworld {
           id
           name
@@ -32,8 +33,9 @@ const DisplayPeople = (data) => {
     allPersons.push({
       id: person.id,
       name: person.name,
-      birthYear: person.birthYear,
-      homeworld: person.homeworld && person.homeworld.name,
+      gender: person.gender || '',
+      birthYear: person.birthYear || '',
+      homeworld: person.homeworld ? person.homeworld.name : '',
     });
 
     return allPersons;
@@ -43,16 +45,48 @@ const DisplayPeople = (data) => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
+      sorter: (a, b) => a.name.localeCompare(b.name),
+    },
+    {
+      title: 'Gender',
+      dataIndex: 'gender',
+      key: 'gender',
+      filters: [
+        {
+          text: 'MALE',
+          value: 'MALE',
+        },
+        {
+          text: 'FEMALE',
+          value: 'FEMALE',
+        },
+        {
+          text: 'UNKNOWN',
+          value: 'UNKNOWN',
+        },
+        {
+          text: 'HERMAPHRODITE',
+          value: 'HERMAPHRODITE',
+        },
+      ],
+      // specify the condition of filtering result
+      // here is that finding the name started with `value`
+      onFilter: (value, record) => record.gender.indexOf(value),
+      sorter: (a, b) => a.gender.localeCompare(b.gender),
     },
     {
       title: 'Birth Year',
       dataIndex: 'birthYear',
       key: 'birthYear',
+      sorter: (a, b) => a.birthYear.localeCompare(b.birthYear, undefined, {
+        numeric: true, sensitivity: 'base'
+      }),
     },
     {
       title: 'Home World',
       dataIndex: 'homeworld',
       key: 'homeworld',
+      sorter: (a, b) => a.homeworld.localeCompare(b.homeworld),
     },
   ];
 
