@@ -73,10 +73,8 @@ const mapDispatchToProps = dispatch => ({
   onPinTask: id => dispatch(pinTask(id)),
 });
 
-const mapStateToProps = ({ tasks }) => {
-  return ({
-    tasks: tasks.filter(t => t.state === 'TASK_INBOX' || t.state === 'TASK_PINNED'),
-  });
-};
+const mapStateToProps = state => ({
+  tasks: state.tasks.allTasks.filter(t => t.state === 'TASK_INBOX' || t.state === 'TASK_PINNED'),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(PureTaskList);

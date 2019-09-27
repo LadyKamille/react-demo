@@ -1,17 +1,19 @@
 import { ARCHIVE_TASK, PIN_TASK } from '../actions/actionTypes';
 
-const initialState = [
-  { id: '1', title: 'Something', state: 'TASK_INBOX' },
-  { id: '2', title: 'Something more', state: 'TASK_INBOX' },
-  { id: '3', title: 'Something else', state: 'TASK_INBOX' },
-  { id: '4', title: 'Something again', state: 'TASK_INBOX' },
-];
+const initialState = {
+  allTasks: [
+    { id: '1', title: 'Something', state: 'TASK_INBOX' },
+    { id: '2', title: 'Something more', state: 'TASK_INBOX' },
+    { id: '3', title: 'Something else', state: 'TASK_INBOX' },
+    { id: '4', title: 'Something again', state: 'TASK_INBOX' },
+  ]
+};
 
 const taskStateReducer = (taskState) => {
   return (state, action) => {
     return {
       ...state,
-      tasks: state.tasks.map(
+      allTasks: state.allTasks.map(
         task => (task.id === action.id ? { ...task, state: taskState } : task)
       ),
     };
