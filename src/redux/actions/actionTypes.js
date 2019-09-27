@@ -1,5 +1,12 @@
+// Films
 export const ADD_FILM = 'ADD_FILM';
 export const ADD_FAVORITE_FILM = 'ADD_FAVORITE_FILM';
-export const ADD_FAVORITE_PERSON = 'ADD_FAVORITE_PERSON';
 export const REMOVE_FAVORITE_FILM = 'REMOVE_FAVORITE_FILM';
+
+// People
+export const ADD_FAVORITE_PERSON = 'ADD_FAVORITE_PERSON';
 export const REMOVE_FAVORITE_PERSON = 'REMOVE_FAVORITE_PERSON';
+
+// Tasks
+export const ARCHIVE_TASK = 'ARCHIVE_TASK';
+export const PIN_TASK = 'PIN_TASK';

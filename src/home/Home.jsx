@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { message, Button, Layout, Typography } from 'antd';
 
 import HomeHook from './HomeHook';
-import Navigation from '../navigation/Navigation';
-
 import { addFavoriteFilm, removeFavoriteFilm } from '../redux/actions';
 import styles from './Home.module.css';
 
@@ -74,13 +72,10 @@ class Home extends Component {
     const { Title } = Typography;
 
     return (
-      <div>
-        <Navigation/>
-        <Content className="content">
-          <Title>Star Wars Films</Title>
-          <HomeHook columns={this.getColumns()}/>
-        </Content>
-      </div>
+      <Content className="content">
+        <Title>Star Wars Films</Title>
+        <HomeHook columns={this.getColumns()}/>
+      </Content>
     );
   }
 }

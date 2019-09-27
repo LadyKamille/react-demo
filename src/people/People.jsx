@@ -11,8 +11,6 @@ import {
 } from 'antd';
 
 import PeopleHook from './PeopleHook';
-import Navigation from '../navigation/Navigation';
-
 import { addFavoritePerson, removeFavoritePerson } from '../redux/actions';
 import styles from './People.module.css';
 
@@ -191,13 +189,10 @@ class People extends Component {
     const { Title } = Typography;
 
     return (
-      <div>
-        <Navigation/>
-        <Content className="content">
-          <Title>Star Wars Characters</Title>
-          <PeopleHook columns={this.getColumns()}/>
-        </Content>
-      </div>
+      <Content className="content">
+        <Title>Star Wars Characters</Title>
+        <PeopleHook columns={this.getColumns()}/>
+      </Content>
     );
   }
 }
@@ -207,7 +202,7 @@ const mapDispatchToProps = dispatch => ({
   dispatch,
 });
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return ({
     allFilms: state.films.allFilms,
     favoritePeople: state.people.favoritePeople,

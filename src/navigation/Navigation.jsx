@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 
-const { Header } = Layout;
+import styles from './Navigation.module.css';
 
 class Navigation extends Component {
   constructor(props) {
@@ -30,23 +30,37 @@ class Navigation extends Component {
   };
 
   render() {
+    const { Header } = Layout;
+
     return (
       <Header>
         <Menu
+          className={styles.menu}
           mode="horizontal"
           onClick={this.handleClick}
           selectedKeys={[this.state.current]}
-          style={{ lineHeight: '64px' }}
           theme="dark"
         >
           <Menu.Item key="home">
-            <Link href="/" to="/">Home</Link>
+            <Link
+              className={styles['menu-item-link']}
+              href="/"
+              to="/"
+            >Home</Link>
           </Menu.Item>
           <Menu.Item key="people">
-            <Link href="/" to="/people">People</Link>
+            <Link
+              className={styles['menu-item-link']}
+              href="/"
+              to="/people"
+            >People</Link>
           </Menu.Item>
           <Menu.Item key="favorites">
-            <Link href="/" to="/favorites">Favorites</Link>
+            <Link
+              className={styles['menu-item-link']}
+              href="/"
+              to="/favorites"
+            >Favorites</Link>
           </Menu.Item>
         </Menu>
       </Header>

@@ -1,32 +1,39 @@
-import {
-  ADD_FILM,
-  ADD_FAVORITE_FILM,
-  ADD_FAVORITE_PERSON,
-  REMOVE_FAVORITE_FILM,
-  REMOVE_FAVORITE_PERSON,
-} from './actionTypes';
+import * as actions from './actionTypes';
 
+// Films
 export const addFilm = (content) => ({
-  type: ADD_FILM,
+  type: actions.ADD_FILM,
   payload: { content },
 });
 
 export const addFavoriteFilm = (content) => ({
-  type: ADD_FAVORITE_FILM,
-  payload: { content },
-});
-
-export const addFavoritePerson = (content) => ({
-  type: ADD_FAVORITE_PERSON,
+  type: actions.ADD_FAVORITE_FILM,
   payload: { content },
 });
 
 export const removeFavoriteFilm = id => ({
-  type: REMOVE_FAVORITE_FILM,
+  type: actions.REMOVE_FAVORITE_FILM,
   payload: { id },
 });
 
+// People
+export const addFavoritePerson = (content) => ({
+  type: actions.ADD_FAVORITE_PERSON,
+  payload: { content },
+});
+
 export const removeFavoritePerson = id => ({
-  type: REMOVE_FAVORITE_PERSON,
+  type: actions.REMOVE_FAVORITE_PERSON,
   payload: { id },
+});
+
+// Tasks
+export const archiveTask = id => ({
+  type: actions.ARCHIVE_TASK,
+  id,
+});
+
+export const pinTask = id => ({
+  type: actions.PIN_TASK,
+  id,
 });
