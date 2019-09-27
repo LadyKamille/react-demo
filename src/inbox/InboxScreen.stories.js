@@ -10,7 +10,7 @@ import { defaultTasks } from '../tasks/TaskList.stories';
 const store = {
   getState: () => {
     return {
-      tasks: defaultTasks,
+      tasks: {allTasks: defaultTasks},
     };
   },
   subscribe: () => 0,
